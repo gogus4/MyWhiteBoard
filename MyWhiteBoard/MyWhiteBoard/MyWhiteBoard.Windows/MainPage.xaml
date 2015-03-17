@@ -1,0 +1,74 @@
+﻿<common:LayoutAwarePage
+    x:Class="MyWhiteBoard.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MyWhiteBoard"
+    xmlns:common="using:MyWhiteBoard.Common"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <DataTemplate x:Key="FolderDataTemplate">
+            <Border BorderBrush="Gray"
+                    Background="#7FD1CECE"
+                    BorderThickness="2"
+                    Margin="3"
+                    CornerRadius="0,0,15,0"
+                    Width="250"
+                    Height="100">
+                <TextBlock Text="{Binding Name}"
+                           Margin="8,0"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center"
+                           TextTrimming="WordEllipsis" />
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="HeaderDataTemplate">
+            <TextBlock Text="{Binding Title}"
+                       Foreground="Brown"
+                       FontSize="16"
+                       Margin="10" />
+        </DataTemplate>
+
+        <CollectionViewSource x:Key="ItemsSource"
+                              x:Name="ItemsSource"
+                              IsSourceGrouped="True"
+                              ItemsPath="Items"
+                              Source="{Binding Groups}" />
+    </Page.Resources>
+
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <Button Grid.Row="0" x:Name="Add" Background="Black" HorizontalAlignment="Center" Content="Add" Click="Add_Click"/>
+        
+        <GridView HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  Grid.Row="1"
+                  ItemTemplate="{StaticResource FolderDataTemplate}"
+                  ItemsSource="{Binding Source={StaticResource ItemsSource}}"
+                  VirtualizingStackPanel.VirtualizationMode="Recycling">
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VariableSizedWrapGrid Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+            <GridView.GroupStyle>
+                <GroupStyle HeaderTemplate="{StaticResource HeaderDataTemplate}">
+                    <GroupStyle.Panel>
+                        <ItemsPanelTemplate>
+                            <VariableSizedWrapGrid Orientation="Vertical"
+                                                   Margin="0,0,20,0" />
+                        </ItemsPanelTemplate>
+                    </GroupStyle.Panel>
+                </GroupStyle>
+            </GridView.GroupStyle>
+        </GridView>
+    </Grid>
+</common:LayoutAwarePage>
