@@ -11,26 +11,51 @@
 
     <Page.Resources>
         <DataTemplate x:Key="FolderDataTemplate">
-            <Border BorderBrush="Gray"
-                    Background="#7FD1CECE"
-                    BorderThickness="2"
-                    Margin="3"
-                    CornerRadius="0,0,15,0"
+            <Border 
+                    Background="#FF5A544D"
                     Width="250"
-                    Height="100">
-                <TextBlock Text="{Binding Name}"
-                           Margin="8,0"
-                           HorizontalAlignment="Left"
-                           VerticalAlignment="Center"
-                           TextTrimming="WordEllipsis" />
+                    Height="115">
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.85*"/>
+                        <ColumnDefinition Width="0.15*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.6*"/>
+                        <RowDefinition Height="0.4*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock 
+                            Text="{Binding Detail}"
+                            TextWrapping="Wrap"
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Margin="10"
+                            HorizontalAlignment="Left"
+                            FontFamily="Segoe UI Light"
+                            FontWeight="Bold"
+                            FontSize="20" />
+
+                    <Grid Background="{Binding Color}" Grid.Row="1" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center">
+
+                        <TextBlock 
+                            Margin="5,5,5,0"
+                            Text="{Binding PersonAffected}"
+                            FontFamily="Segoe UI Light"
+                            FontSize="16" />
+                    </Grid>
+                </Grid>
             </Border>
         </DataTemplate>
 
         <DataTemplate x:Key="HeaderDataTemplate">
             <TextBlock Text="{Binding Title}"
-                       Foreground="Brown"
-                       FontSize="16"
-                       Margin="10" />
+                       HorizontalAlignment="Left"
+                       Foreground="Gray"
+                       Margin="5"
+                       FontSize="30" />
         </DataTemplate>
 
         <CollectionViewSource x:Key="ItemsSource"
@@ -40,18 +65,39 @@
                               Source="{Binding Groups}" />
     </Page.Resources>
 
-    <Grid Background="White">
+    <Grid Background="#FF232323">
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.15*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
-        <Button Grid.Row="0" x:Name="Add" Background="Black" HorizontalAlignment="Center" Content="Add" Click="Add_Click"/>
-        
-        <GridView HorizontalAlignment="Stretch"
-                  VerticalAlignment="Stretch"
+
+        <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="40,0,0,0">
+            <Button x:Name="Previous" BorderThickness="0" FontFamily="Segoe UI Symbol" FontSize="22" Content="&#xe112;"/>
+            <TextBlock Text="16 Mars - 20 Mars 2015" FontFamily="Segoe UI Light" FontWeight="Bold" FontSize="36"/>
+            <Button x:Name="Next" BorderThickness="0" FontFamily="Segoe UI Symbol" FontSize="22" Content="&#xe111;"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="0" HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button x:Name="Init" BorderThickness="0" Tag="Initialisation">
+                <StackPanel Orientation="Vertical" >
+                    <TextBlock HorizontalAlignment="Center" FontFamily="Segoe UI Symbol" FontSize="22" Text="&#xe117;"/>
+                    <TextBlock Text="Initialisation" Margin="0,5,0,0" FontFamily="Segoe UI Light"  HorizontalAlignment="Center"  FontSize="16"/>
+                </StackPanel>
+            </Button>
+
+            <Button x:Name="AddTask" BorderThickness="0" Tag="Ajouter une tâche">
+                <StackPanel Orientation="Vertical" >
+                    <TextBlock HorizontalAlignment="Center" FontFamily="Segoe UI Symbol" FontSize="22" Text="&#xe109;"/>
+                    <TextBlock Text="Ajouter une tâche" Margin="0,5,0,0" FontFamily="Segoe UI Light"  HorizontalAlignment="Center"  FontSize="16"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+
+        <GridView HorizontalAlignment="Center"
+                  Margin="5"
                   Grid.Row="1"
                   ItemTemplate="{StaticResource FolderDataTemplate}"
+                  SelectionMode="None"
                   ItemsSource="{Binding Source={StaticResource ItemsSource}}"
                   VirtualizingStackPanel.VirtualizationMode="Recycling">
             <GridView.ItemsPanel>
@@ -61,12 +107,32 @@
             </GridView.ItemsPanel>
             <GridView.GroupStyle>
                 <GroupStyle HeaderTemplate="{StaticResource HeaderDataTemplate}">
-                    <GroupStyle.Panel>
-                        <ItemsPanelTemplate>
-                            <VariableSizedWrapGrid Orientation="Vertical"
-                                                   Margin="0,0,20,0" />
-                        </ItemsPanelTemplate>
-                    </GroupStyle.Panel>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="GroupItem">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="GroupItem">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                            <ContentPresenter Content="{TemplateBinding Content}" Grid.Row="0"/>
+                                            <ItemsControl x:Name="ItemsControl2" ItemsSource="{Binding GroupItems}" Grid.Row="1">
+                                                <ItemsControl.Template>
+                                                    <ControlTemplate>
+                                                        <ScrollViewer x:Name="ScrollViewer" VerticalScrollBarVisibility="Hidden"                                                  VerticalScrollMode="Enabled" HorizontalScrollBarVisibility="Disabled"                                                  HorizontalScrollMode="Disabled">
+                                                            <ItemsPresenter Margin="0,0,10,0"/>
+                                                        </ScrollViewer>
+                                                    </ControlTemplate>
+                                                </ItemsControl.Template>
+                                            </ItemsControl>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
                 </GroupStyle>
             </GridView.GroupStyle>
         </GridView>

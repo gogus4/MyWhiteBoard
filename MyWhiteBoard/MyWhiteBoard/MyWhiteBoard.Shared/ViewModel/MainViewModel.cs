@@ -33,9 +33,37 @@ namespace MyWhiteBoard.ViewModel
                 ObservableCollection<Task> folders = new ObservableCollection<Task>();
                 for (int j = 0; j < 10; j++)
                 {
-                    folders.Add(new Task { Name = string.Concat("Folder ", j) });
+                    if (j == 0)
+                        folders.Add(new Task { Detail = "Bug E-dépanneur.", PersonAffected = "Diégo Da Costa Oliveira" });
+
+                    else if (j == 1)
+                        folders.Add(new Task { Detail = "Bug E-dépanneur.", PersonAffected = "Emmanuel Bricard" });
+                    else
+                        folders.Add(new Task { Detail = "Bug E-dépanneur.", PersonAffected = "Yannick Grall" });
                 }
-                group.Title = string.Concat("Group ", i);
+
+                String day = "";
+
+                switch (i)
+                {
+                    case 0:
+                        day = "Lundi";
+                        break;
+                    case 1:
+                        day = "Mardi";
+                        break;
+                    case 2:
+                        day = "Mercredi";
+                        break;
+                    case 3:
+                        day = "Jeudi";
+                        break;
+                    case 4:
+                        day = "Vendredi";
+                        break;
+                }
+
+                group.Title = string.Concat(day);
                 group.Items = folders;
                 Groups.Add(group);
             }

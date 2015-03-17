@@ -32,7 +32,8 @@ namespace MyWhiteBoard
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {
-            MainViewModel.Instance.Groups[0].Items.Add(new Task() { Name = "Test" });
+            MainViewModel.Instance.Groups[0].Items.Add(new Task { Detail = "Ceci est le détail de la tache à réaliser.Ceci est le détail de la tache à réaliser." , PersonAffected = "Diégo Da Costa Oliveira" });
+
         }
     }
 }

@@ -7,18 +7,11 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-
-                <!-- 
-                    Styles définissant l'apparence globale de la plateforme
-                    Requis par les modèles de projets et les modèles d'éléments Visual Studio
-                 -->
                 <ResourceDictionary Source="Common/StandardStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
-            <!-- Ressources spécifiques à l'application -->
 
             <x:String x:Key="AppName">My WhiteBoard</x:String>
         </ResourceDictionary>
     </Application.Resources>
-    
+
 </Application>
