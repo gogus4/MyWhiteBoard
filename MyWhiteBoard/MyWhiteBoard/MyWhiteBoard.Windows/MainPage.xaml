@@ -4,12 +4,18 @@
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MyWhiteBoard"
+    xmlns:task="using:MyWhiteBoard.View"
     xmlns:common="using:MyWhiteBoard.Common"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
     <Page.Resources>
+
+        <DataTemplate x:Key="TaskTemplate">
+            <task:ItemViewer/>
+        </DataTemplate>
+
         <DataTemplate x:Key="FolderDataTemplate">
             <Border 
                     Background="#FF5A544D"
@@ -51,7 +57,7 @@
         </DataTemplate>
 
         <DataTemplate x:Key="HeaderDataTemplate">
-            <TextBlock Text="{Binding Title}"
+            <TextBlock Text="{Binding Day}"
                        HorizontalAlignment="Left"
                        Foreground="Gray"
                        Margin="5"
@@ -71,13 +77,72 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="40,0,0,0">
-            <Button x:Name="Previous" BorderThickness="0" FontFamily="Segoe UI Symbol" FontSize="22" Content="&#xe112;"/>
-            <TextBlock Text="16 Mars - 20 Mars 2015" FontFamily="Segoe UI Light" FontWeight="Bold" FontSize="36"/>
-            <Button x:Name="Next" BorderThickness="0" FontFamily="Segoe UI Symbol" FontSize="22" Content="&#xe111;"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.1*"/>
+            <ColumnDefinition Width="0.2*"/>
+            <ColumnDefinition Width="0.8*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid x:Name="HiddenPage" Background="LightGray" Opacity="0.1" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="3"  Canvas.ZIndex="1" Visibility="Collapsed" Tapped="HiddenPage_Tapped" />
+
+        <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Visibility="Collapsed" x:Name="Animation" Background="SteelBlue" Grid.RowSpan="2" Canvas.ZIndex="1">
+            <StackPanel.Resources>
+                <Storyboard x:Name="ShowStoryboard">
+                    <DoubleAnimationUsingKeyFrames
+                            Storyboard.TargetName="Animation"
+                            Storyboard.TargetProperty="(Canvas.Left)"
+                            Duration="0:0:5"
+                            >
+                        <DiscreteDoubleKeyFrame KeyTime="0:0:0.5" Value="10" />
+                        <DiscreteDoubleKeyFrame KeyTime="0:0:2" Value="25" />
+                        <DiscreteDoubleKeyFrame KeyTime="0:0:3" Value="50" />
+                        <EasingDoubleKeyFrame KeyTime="0:0:5" Value="100" />
+                    </DoubleAnimationUsingKeyFrames>
+                </Storyboard>
+            </StackPanel.Resources>
+
+
+            <TextBlock 
+            Margin="20"
+            Text="Playlists"
+            Style="{StaticResource SubheaderTextBlockStyle}" />
+            <ListView
+            Margin="20,0,0,0"
+            SelectionMode="Single"
+            SelectedItem="{Binding SelectedPlaylist, Mode=TwoWay}"
+            ItemsSource="{Binding Playlists}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Border Height="25" Width="25" Background="White" />
+                            <TextBlock 
+                            Margin="10,0,0,0" LineHeight="0" FontWeight="Light"
+                            Text="{Binding Title, FallbackValue='Sample Playlist Title'}"
+                            VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <x:String>Test</x:String>
+                <x:String>Test</x:String>
+                <x:String>Test</x:String>
+                <x:String>Test</x:String>
+                <x:String>Test</x:String>
+                <x:String>Test</x:String>
+                <x:String>Test</x:String>
+            </ListView>
         </StackPanel>
 
-        <StackPanel Grid.Row="0" HorizontalAlignment="Right" Orientation="Horizontal">
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button x:Name="DisplayMenu"  BorderThickness="0" FontFamily="Segoe UI Symbol" FontSize="30" Content="&#xe179;" Click="DisplayMenu_Click" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="100,0,0,0">
+            <Button x:Name="Previous" BorderThickness="0" FontFamily="Segoe UI Symbol" FontSize="22" Content="&#xe112;"/>
+            <TextBlock Text="16 Mars - 20 Mars 2015" FontFamily="Segoe UI Light" FontWeight="Bold" FontSize="36"/>
+            <Button x:Name="Next" BorderThickness="0" FontFamily="Segoe UI Symbol" FontSize="22" Content="&#xe111;" Click="Next_Click"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Right" Orientation="Horizontal">
             <Button x:Name="Init" BorderThickness="0" Tag="Initialisation">
                 <StackPanel Orientation="Vertical" >
                     <TextBlock HorizontalAlignment="Center" FontFamily="Segoe UI Symbol" FontSize="22" Text="&#xe117;"/>
@@ -93,48 +158,45 @@
             </Button>
         </StackPanel>
 
-        <GridView HorizontalAlignment="Center"
+        <GridView   x:Name="TasksGridView" 
+                    Grid.ColumnSpan="3" 
+                    Grid.Row="1"
+                    ItemTemplate="{StaticResource TaskTemplate}"
+                    ShowsScrollingPlaceholders="False"
+                    HorizontalAlignment="Center"
+                    ContainerContentChanging="GridView_ContainerContentChanging"
+                    BorderBrush="LightGray"
+                    VerticalAlignment="Top"
+                    CanReorderItems="True"
+                    AllowDrop="True"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto" SelectionMode="None"/>
+
+        <!-- <GridView 
+                    x:Name="TasksGridView"
+                    HorizontalAlignment="Center"
+                  Grid.ColumnSpan="3"
                   Margin="5"
                   Grid.Row="1"
-                  ItemTemplate="{StaticResource FolderDataTemplate}"
+                  ItemTemplate="{StaticResource TaskTemplate}"
+                  ShowsScrollingPlaceholders="False"
                   SelectionMode="None"
                   ItemsSource="{Binding Source={StaticResource ItemsSource}}"
-                  VirtualizingStackPanel.VirtualizationMode="Recycling">
+                  DragItemsStarting="GridView_DragItemsStarting"
+                  VirtualizingStackPanel.VirtualizationMode="Recycling"
+                  AllowDrop="True" 
+                  CanReorderItems="True"
+                  CanDragItems="True" Drop="GridView_Drop" ContainerContentChanging="GridView_ContainerContentChanging">
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <VariableSizedWrapGrid Orientation="Vertical" />
+                    <VariableSizedWrapGrid Orientation="Horizontal" />
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
             <GridView.GroupStyle>
                 <GroupStyle HeaderTemplate="{StaticResource HeaderDataTemplate}">
-                    <GroupStyle.ContainerStyle>
-                        <Style TargetType="GroupItem">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="GroupItem">
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto"/>
-                                                <RowDefinition Height="*"/>
-                                            </Grid.RowDefinitions>
-                                            <ContentPresenter Content="{TemplateBinding Content}" Grid.Row="0"/>
-                                            <ItemsControl x:Name="ItemsControl2" ItemsSource="{Binding GroupItems}" Grid.Row="1">
-                                                <ItemsControl.Template>
-                                                    <ControlTemplate>
-                                                        <ScrollViewer x:Name="ScrollViewer" VerticalScrollBarVisibility="Hidden"                                                  VerticalScrollMode="Enabled" HorizontalScrollBarVisibility="Disabled"                                                  HorizontalScrollMode="Disabled">
-                                                            <ItemsPresenter Margin="0,0,10,0"/>
-                                                        </ScrollViewer>
-                                                    </ControlTemplate>
-                                                </ItemsControl.Template>
-                                            </ItemsControl>
-                                        </Grid>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </GroupStyle.ContainerStyle>
+                    
                 </GroupStyle>
             </GridView.GroupStyle>
-        </GridView>
+        </GridView> -->
     </Grid>
 </common:LayoutAwarePage>

@@ -6,6 +6,7 @@ namespace MyWhiteBoard.Model
 {
     public class Task
     {
+        public string Day { get; set; }
         public string Detail { get; set; }
         public string PersonAffected { get; set; }
         public string Color
