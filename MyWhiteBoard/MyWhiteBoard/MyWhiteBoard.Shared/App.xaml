@@ -11,7 +11,55 @@
             </ResourceDictionary.MergedDictionaries>
 
             <x:String x:Key="AppName">My WhiteBoard</x:String>
+
+            <DataTemplate x:Key="TaskTemplate">
+                <Border 
+                    Background="#FF5A544D"
+                    Width="250"
+                    Height="115">
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.85*"/>
+                            <ColumnDefinition Width="0.15*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.6*"/>
+                            <RowDefinition Height="0.4*"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock 
+                            Text="{Binding Detail}"
+                            x:Name="Detail"
+                            TextWrapping="Wrap"
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Margin="10"
+                            HorizontalAlignment="Left"
+                            FontFamily="Segoe UI Light"
+                            FontWeight="Bold"
+                            FontSize="20" />
+
+                        <Grid Background="{Binding Color}" Grid.Row="1" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center">
+
+                            <TextBlock 
+                            x:Name="Person"
+                            Margin="5,5,5,0"
+                            Text="{Binding PersonAffected}"
+                            FontFamily="Segoe UI Light"
+                            FontSize="16" />
+                        </Grid>
+                    </Grid>
+                </Border>
+            </DataTemplate>
+
+            <ItemsPanelTemplate x:Key="taskItemPanelTemplate">
+                <StackPanel Orientation="Horizontal"/>
+            </ItemsPanelTemplate>
+
         </ResourceDictionary>
+
     </Application.Resources>
 
 </Application>

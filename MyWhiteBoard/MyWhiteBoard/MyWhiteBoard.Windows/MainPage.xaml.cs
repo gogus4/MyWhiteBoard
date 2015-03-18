@@ -1,6 +1,5 @@
 ﻿using MyWhiteBoard.Common;
 using MyWhiteBoard.Model;
-using MyWhiteBoard.View;
 using MyWhiteBoard.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -21,6 +20,8 @@ namespace MyWhiteBoard
 {
     public sealed partial class MainPage : LayoutAwarePage
     {
+        private Task draggedItem;
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -28,14 +29,7 @@ namespace MyWhiteBoard
 
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
-            // create a new instance of store data
-            StoreData storeData = new StoreData();
-            // set the source of the GridView to be the sample data
-            TasksGridView.ItemsSource = storeData.Collection;
-
-            //TasksGridView.ContainerContentChanging += GridView_ContainerContentChanging;
-            //ItemsSource.Source = MainViewModel.Instance.Groups;
-            //TasksGridView.ItemsSource = MainViewModel.Instance.Groups;
+            listTasksViewSource.Source = MainViewModel.Instance.Groups;
         }
 
         private void Add_Click(object sender, RoutedEventArgs e)
@@ -62,70 +56,29 @@ namespace MyWhiteBoard
             ShowStoryboard.Begin();
         }
 
-        private void GridView_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
+        private void TasksGridView_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
         {
-            
-
-            /*var item = e.Items.FirstOrDefault();
-            if (item == null)
-                return;
-
-            e.Data.Properties.Add("item", item);
-            e.Data.Properties.Add("gridSource", sender);*/
+            draggedItem = e.Items[0] as Task;
         }
 
-        private void GridView_Drop(object sender, DragEventArgs e)
+        private void VariableSizedWrapGrid_Drop(object sender, DragEventArgs e)
         {
-            /*object gridSource;
-            e.Data.Properties.TryGetValue("gridSource", out gridSource);
-
-            if (gridSource == sender)
-                return;
-
-            object sourceItem;
-            e.Data.Properties.TryGetValue("item", out sourceItem);
-            if (sourceItem == null)
-                return;*/
-
-            //_mainViewModel.SwitchItem((DemoItem)sourceItem);
-        }
-
-        private void GridView_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
-        {
-            ItemViewer iv = args.ItemContainer.ContentTemplateRoot as ItemViewer;
-
-            if (args.InRecycleQueue == true)
+            try
             {
-                iv.ClearData();
-            }
-            else if (args.Phase == 0)
-            {
-                iv.ShowPlaceholder(args.Item as Task);
-
-                // Register for async callback to visualize Title asynchronously
-                args.RegisterUpdateCallback(ContainerContentChangingDelegate);
-            }
-            else if (args.Phase == 1)
-            {
-                iv.ShowValues();
-                args.RegisterUpdateCallback(ContainerContentChangingDelegate);
-            }
-
-            // For imporved performance, set Handled to true since app is visualizing the data item
-            args.Handled = true;
-        }
-
-        private TypedEventHandler<ListViewBase, ContainerContentChangingEventArgs> ContainerContentChangingDelegate
-        {
-            get
-            {
-                if (_delegate == null)
+                if (draggedItem != null)
                 {
-                    _delegate = new TypedEventHandler<ListViewBase, ContainerContentChangingEventArgs>(GridView_ContainerContentChanging);
+                    var sourceCategory = draggedItem.Group;
+                    var child = (((VariableSizedWrapGrid)sender).Children[0] as GridViewItem).Content as Task;
+                    draggedItem.Group = child.Group;
+
+                    child.Group.Items.Add(draggedItem);
+                    sourceCategory.Items.Remove(draggedItem);
+                    draggedItem = null;
                 }
-                return _delegate;
+            }
+            catch (Exception ex)
+            {
             }
         }
-        private TypedEventHandler<ListViewBase, ContainerContentChangingEventArgs> _delegate;
     }
 }

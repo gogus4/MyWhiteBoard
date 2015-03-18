@@ -27,7 +27,88 @@ namespace MyWhiteBoard.ViewModel
             _instance = this;
             Groups = new ObservableCollection<Group>();
 
-            for (int i = 0; i < 5; i++)
+            Group novel = new Group();
+            novel.Title = "Lundi";
+
+            Group fairyTale = new Group();
+            fairyTale.Title = "Mardi";
+
+            Group management = new Group();
+            management.Title = "Mercredi";
+
+            Group computerScience = new Group();
+            computerScience.Title = "Jeudi";
+
+            Group vendredi = new Group();
+            vendredi.Title = "Vendredi";
+
+            Task badBoy = new Task();
+            badBoy.Detail = "Bad Boy";
+            badBoy.PersonAffected = "Emmanuel Bricard";
+            badBoy.Group = novel;
+            novel.Items.Add(badBoy);
+
+            badBoy = new Task();
+            badBoy.Detail = "Bad Boy";
+            badBoy.PersonAffected = "Emmanuel Bricard";
+            badBoy.Group = novel;
+            novel.Items.Add(badBoy);
+
+            badBoy = new Task();
+            badBoy.Detail = "Bad Boy";
+            badBoy.PersonAffected = "Yannick Grall";
+            badBoy.Group = fairyTale;
+            fairyTale.Items.Add(badBoy);
+
+            badBoy = new Task();
+            badBoy.Detail = "Bad Boy";
+            badBoy.PersonAffected = "Yannick Grall";
+            badBoy.Group = fairyTale;
+            fairyTale.Items.Add(badBoy);
+
+            badBoy = new Task();
+            badBoy.Detail = "Bad Boy";
+            badBoy.PersonAffected = "Yannick Grall";
+            badBoy.Group = management;
+            management.Items.Add(badBoy);
+
+            badBoy = new Task();
+            badBoy.Detail = "Bad Boy";
+            badBoy.PersonAffected = "Diégo Da Costa Oliveira";
+            badBoy.Group = management;
+            management.Items.Add(badBoy);
+
+            badBoy = new Task();
+            badBoy.Detail = "Bad Boy";
+            badBoy.PersonAffected = "Diégo Da Costa Oliveira";
+            badBoy.Group = computerScience;
+            computerScience.Items.Add(badBoy);
+
+            badBoy = new Task();
+            badBoy.Detail = "Bad Boy";
+            badBoy.PersonAffected = "Diégo Da Costa Oliveira";
+            badBoy.Group = computerScience;
+            computerScience.Items.Add(badBoy);
+
+            badBoy = new Task();
+            badBoy.Detail = "Bad Boy";
+            badBoy.PersonAffected = "Diégo Da Costa Oliveira";
+            badBoy.Group = vendredi;
+            vendredi.Items.Add(badBoy);
+
+            badBoy = new Task();
+            badBoy.Detail = "Bad Boy";
+            badBoy.PersonAffected = "Diégo Da Costa Oliveira";
+            badBoy.Group = vendredi;
+            vendredi.Items.Add(badBoy);
+
+            Groups.Add(novel);
+            Groups.Add(fairyTale);
+            Groups.Add(management);
+            Groups.Add(computerScience);
+            Groups.Add(vendredi);
+
+            /*for (int i = 0; i < 5; i++)
             {
                 Group group = new Group();
                 ObservableCollection<Task> folders = new ObservableCollection<Task>();
@@ -65,8 +146,9 @@ namespace MyWhiteBoard.ViewModel
 
                 group.Title = string.Concat(day);
                 group.Items = folders;
-                Groups.Add(group);
-            }
+                Groups.Add(group);*/
+
+
         }
     }
 }

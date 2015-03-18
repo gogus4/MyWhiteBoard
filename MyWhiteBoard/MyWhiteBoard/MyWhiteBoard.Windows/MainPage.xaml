@@ -12,63 +12,8 @@
 
     <Page.Resources>
 
-        <DataTemplate x:Key="TaskTemplate">
-            <task:ItemViewer/>
-        </DataTemplate>
+        <CollectionViewSource x:Name="listTasksViewSource" IsSourceGrouped="True" ItemsPath="Items"/>
 
-        <DataTemplate x:Key="FolderDataTemplate">
-            <Border 
-                    Background="#FF5A544D"
-                    Width="250"
-                    Height="115">
-
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.85*"/>
-                        <ColumnDefinition Width="0.15*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="0.6*"/>
-                        <RowDefinition Height="0.4*"/>
-                    </Grid.RowDefinitions>
-
-                    <TextBlock 
-                            Text="{Binding Detail}"
-                            TextWrapping="Wrap"
-                            Grid.Row="0"
-                            Grid.Column="0"
-                            Margin="10"
-                            HorizontalAlignment="Left"
-                            FontFamily="Segoe UI Light"
-                            FontWeight="Bold"
-                            FontSize="20" />
-
-                    <Grid Background="{Binding Color}" Grid.Row="1" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center">
-
-                        <TextBlock 
-                            Margin="5,5,5,0"
-                            Text="{Binding PersonAffected}"
-                            FontFamily="Segoe UI Light"
-                            FontSize="16" />
-                    </Grid>
-                </Grid>
-            </Border>
-        </DataTemplate>
-
-        <DataTemplate x:Key="HeaderDataTemplate">
-            <TextBlock Text="{Binding Day}"
-                       HorizontalAlignment="Left"
-                       Foreground="Gray"
-                       Margin="5"
-                       FontSize="30" />
-        </DataTemplate>
-
-        <CollectionViewSource x:Key="ItemsSource"
-                              x:Name="ItemsSource"
-                              IsSourceGrouped="True"
-                              ItemsPath="Items"
-                              Source="{Binding Groups}" />
     </Page.Resources>
 
     <Grid Background="#FF232323">
@@ -158,19 +103,45 @@
             </Button>
         </StackPanel>
 
-        <GridView   x:Name="TasksGridView" 
-                    Grid.ColumnSpan="3" 
-                    Grid.Row="1"
-                    ItemTemplate="{StaticResource TaskTemplate}"
-                    ShowsScrollingPlaceholders="False"
-                    HorizontalAlignment="Center"
-                    ContainerContentChanging="GridView_ContainerContentChanging"
-                    BorderBrush="LightGray"
-                    VerticalAlignment="Top"
-                    CanReorderItems="True"
-                    AllowDrop="True"
-                    ScrollViewer.VerticalScrollBarVisibility="Auto"
-                    ScrollViewer.HorizontalScrollBarVisibility="Auto" SelectionMode="None"/>
+        <GridView               
+            x:Name="TasksGridView"
+            ItemTemplate="{StaticResource TaskTemplate}"
+            ItemsPanel="{StaticResource taskItemPanelTemplate}"   
+            ItemsSource="{Binding Source={StaticResource listTasksViewSource}, Mode=TwoWay}"
+            DragItemsStarting="TasksGridView_DragItemsStarting"
+            Grid.ColumnSpan="3" 
+            Grid.Row="1"
+            HorizontalAlignment="Center"                      
+            SelectionMode="None"
+            CanDragItems="True">
+            <GridView.GroupStyle>
+                <GroupStyle HidesIfEmpty="True">
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <Grid Margin="5">
+                                <TextBlock Text="{Binding Title}" Foreground="Gray" FontSize="30"/>
+                            </Grid>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="GroupItem">
+                            <Setter Property="FontFamily" Value="Segoe UI" />
+                            <Setter Property="Padding" Value="0" />
+                            <Setter Property="Margin" Value="0,0,0,0" />
+                            <Setter Property="HorizontalContentAlignment" Value="Left" />
+                            <Setter Property="VerticalContentAlignment" Value="Top" />
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="TabNavigation" Value="Local" />
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                    <GroupStyle.Panel>
+                        <ItemsPanelTemplate>
+                            <VariableSizedWrapGrid Drop="VariableSizedWrapGrid_Drop" AllowDrop="True" Margin="0,0,10,0" />
+                        </ItemsPanelTemplate>
+                    </GroupStyle.Panel>
+                </GroupStyle>
+            </GridView.GroupStyle>
+        </GridView>
 
         <!-- <GridView 
                     x:Name="TasksGridView"
