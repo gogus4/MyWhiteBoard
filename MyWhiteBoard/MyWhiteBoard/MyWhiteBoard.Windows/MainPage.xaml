@@ -24,13 +24,13 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.1*"/>
-            <ColumnDefinition Width="0.2*"/>
+            <ColumnDefinition Width="0.1*"/>
             <ColumnDefinition Width="0.8*"/>
         </Grid.ColumnDefinitions>
 
         <Grid x:Name="HiddenPage" Background="LightGray" Opacity="0.1" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="3"  Canvas.ZIndex="1" Visibility="Collapsed" Tapped="HiddenPage_Tapped" />
 
-        <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Visibility="Collapsed" x:Name="Animation" Background="SteelBlue" Grid.RowSpan="2" Canvas.ZIndex="1">
+        <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Visibility="Collapsed" x:Name="Animation" Background="#FF282828" Grid.RowSpan="2" Canvas.ZIndex="1">
             <StackPanel.Resources>
                 <Storyboard x:Name="ShowStoryboard">
                     <DoubleAnimationUsingKeyFrames
@@ -77,71 +77,111 @@
             </ListView>
         </StackPanel>
 
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Button x:Name="DisplayMenu"  BorderThickness="0" FontFamily="Segoe UI Symbol" FontSize="30" Content="&#xe179;" Click="DisplayMenu_Click" />
-        </StackPanel>
+        <Grid Grid.Row="0" Grid.ColumnSpan="3" Background="#FF5A544D">
+            <StackPanel VerticalAlignment="Center" Margin="20,0,0,0">
+                <Button x:Name="DisplayMenu"  BorderThickness="0" FontFamily="Segoe UI Symbol" FontSize="30" Content="&#xe179;" Click="DisplayMenu_Click" />
+            </StackPanel>
 
-        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="100,0,0,0">
-            <Button x:Name="Previous" BorderThickness="0" FontFamily="Segoe UI Symbol" FontSize="22" Content="&#xe112;"/>
-            <TextBlock Text="16 Mars - 20 Mars 2015" FontFamily="Segoe UI Light" FontWeight="Bold" FontSize="36"/>
-            <Button x:Name="Next" BorderThickness="0" FontFamily="Segoe UI Symbol" FontSize="22" Content="&#xe111;" Click="Next_Click"/>
-        </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="100,0,0,0">
+                <Button x:Name="Previous" BorderThickness="0" FontFamily="Segoe UI Symbol" FontSize="22" Content="&#xe112;"/>
+                <TextBlock Text="16 Mars - 20 Mars 2015" FontFamily="Segoe UI Light" FontWeight="Bold" FontSize="36"/>
+                <Button x:Name="Next" BorderThickness="0" FontFamily="Segoe UI Symbol" FontSize="22" Content="&#xe111;" Click="Next_Click"/>
+            </StackPanel>
 
-        <StackPanel Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Right" Orientation="Horizontal">
-            <Button x:Name="Init" BorderThickness="0" Tag="Initialisation">
-                <StackPanel Orientation="Vertical" >
-                    <TextBlock HorizontalAlignment="Center" FontFamily="Segoe UI Symbol" FontSize="22" Text="&#xe117;"/>
-                    <TextBlock Text="Initialisation" Margin="0,5,0,0" FontFamily="Segoe UI Light"  HorizontalAlignment="Center"  FontSize="16"/>
-                </StackPanel>
-            </Button>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
 
-            <Button x:Name="AddTask" BorderThickness="0" Tag="Ajouter une tâche">
-                <StackPanel Orientation="Vertical" >
-                    <TextBlock HorizontalAlignment="Center" FontFamily="Segoe UI Symbol" FontSize="22" Text="&#xe109;"/>
-                    <TextBlock Text="Ajouter une tâche" Margin="0,5,0,0" FontFamily="Segoe UI Light"  HorizontalAlignment="Center"  FontSize="16"/>
-                </StackPanel>
-            </Button>
-        </StackPanel>
+                <Button x:Name="Team" BorderThickness="0" Tag="L'équipe">
+                    <StackPanel Orientation="Vertical" >
+                        <TextBlock HorizontalAlignment="Center" FontFamily="Segoe UI Symbol" FontSize="22" Text="&#xe10c;"/>
+                        <TextBlock Text="L'équipe" Margin="0,5,0,0" FontFamily="Segoe UI Light"  HorizontalAlignment="Center" FontSize="16"/>
+                    </StackPanel>
+                </Button>
 
-        <GridView               
+                <Button x:Name="StatsEDep" BorderThickness="0" Tag="Statistiques e-dépanneur">
+                    <StackPanel Orientation="Vertical" >
+                        <TextBlock HorizontalAlignment="Center" FontFamily="Segoe UI Symbol" FontSize="22" Text="&#xe10c;"/>
+                        <TextBlock Text="Stats e-dép" Margin="0,5,0,0" FontFamily="Segoe UI Light"  HorizontalAlignment="Center" FontSize="16"/>
+                    </StackPanel>
+                </Button>
+
+                <Button x:Name="StatsTablets" BorderThickness="0" Tag="Statistiques tablettes">
+                    <StackPanel Orientation="Vertical" >
+                        <TextBlock HorizontalAlignment="Center" FontFamily="Segoe UI Symbol" FontSize="22" Text="&#xe10c;"/>
+                        <TextBlock Text="Stats tablettes" Margin="0,5,0,0" FontFamily="Segoe UI Light"  HorizontalAlignment="Center" FontSize="16"/>
+                    </StackPanel>
+                </Button>
+
+                <Button x:Name="StatsCRM" BorderThickness="0" Tag="Statistiques tablettes">
+                    <StackPanel Orientation="Vertical" >
+                        <TextBlock HorizontalAlignment="Center" FontFamily="Segoe UI Symbol" FontSize="22" Text="&#xe10c;"/>
+                        <TextBlock Text="Stats CRM" Margin="0,5,0,0" FontFamily="Segoe UI Light"  HorizontalAlignment="Center" FontSize="16"/>
+                    </StackPanel>
+                </Button>
+
+                <Button x:Name="Init" BorderThickness="0" Tag="Initialisation">
+                    <StackPanel Orientation="Vertical" >
+                        <TextBlock HorizontalAlignment="Center" FontFamily="Segoe UI Symbol" FontSize="22" Text="&#xe117;"/>
+                        <TextBlock Text="Initialisation" Margin="0,5,0,0" FontFamily="Segoe UI Light"  HorizontalAlignment="Center"  FontSize="16"/>
+                    </StackPanel>
+                </Button>
+
+                <Button x:Name="AddTask" BorderThickness="0" Tag="Ajouter une tâche">
+                    <StackPanel Orientation="Vertical" >
+                        <TextBlock HorizontalAlignment="Center" FontFamily="Segoe UI Symbol" FontSize="22" Text="&#xe109;"/>
+                        <TextBlock Text="Ajouter une tâche" Margin="0,5,0,0" FontFamily="Segoe UI Light"  HorizontalAlignment="Center"  FontSize="16"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Grid>
+        
+        <ScrollViewer ScrollViewer.HorizontalScrollMode="Disabled"
+            ScrollViewer.VerticalScrollMode="Enabled" 
+            Grid.ColumnSpan="3" 
+            Margin="0,20,0,0"
+            HorizontalAlignment="Center"
+            Grid.Row="1" >
+
+            <GridView     
+                ScrollViewer.HorizontalScrollMode="Disabled"
+                ScrollViewer.VerticalScrollMode="Auto"
             x:Name="TasksGridView"
+                HorizontalAlignment="Center"
             ItemTemplate="{StaticResource TaskTemplate}"
             ItemsPanel="{StaticResource taskItemPanelTemplate}"   
             ItemsSource="{Binding Source={StaticResource listTasksViewSource}, Mode=TwoWay}"
-            DragItemsStarting="TasksGridView_DragItemsStarting"
-            Grid.ColumnSpan="3" 
-            Grid.Row="1"
-            HorizontalAlignment="Center"                      
+            DragItemsStarting="TasksGridView_DragItemsStarting"                 
             SelectionMode="None"
             CanDragItems="True">
-            <GridView.GroupStyle>
-                <GroupStyle HidesIfEmpty="True">
-                    <GroupStyle.HeaderTemplate>
-                        <DataTemplate>
-                            <Grid Margin="5">
-                                <TextBlock Text="{Binding Title}" Foreground="Gray" FontSize="30"/>
-                            </Grid>
-                        </DataTemplate>
-                    </GroupStyle.HeaderTemplate>
-                    <GroupStyle.ContainerStyle>
-                        <Style TargetType="GroupItem">
-                            <Setter Property="FontFamily" Value="Segoe UI" />
-                            <Setter Property="Padding" Value="0" />
-                            <Setter Property="Margin" Value="0,0,0,0" />
-                            <Setter Property="HorizontalContentAlignment" Value="Left" />
-                            <Setter Property="VerticalContentAlignment" Value="Top" />
-                            <Setter Property="BorderThickness" Value="0"/>
-                            <Setter Property="TabNavigation" Value="Local" />
-                        </Style>
-                    </GroupStyle.ContainerStyle>
-                    <GroupStyle.Panel>
-                        <ItemsPanelTemplate>
-                            <VariableSizedWrapGrid Drop="VariableSizedWrapGrid_Drop" AllowDrop="True" Margin="0,0,10,0" />
-                        </ItemsPanelTemplate>
-                    </GroupStyle.Panel>
-                </GroupStyle>
-            </GridView.GroupStyle>
-        </GridView>
+                <GridView.GroupStyle>
+                    <GroupStyle HidesIfEmpty="True">
+                        <GroupStyle.HeaderTemplate>
+                            <DataTemplate>
+                                <Grid Margin="5">
+                                    <TextBlock Text="{Binding Title}" Foreground="Gray" FontSize="30"/>
+                                </Grid>
+                            </DataTemplate>
+                        </GroupStyle.HeaderTemplate>
+                        <GroupStyle.ContainerStyle>
+                            <Style TargetType="GroupItem">
+                                <Setter Property="FontFamily" Value="Segoe UI" />
+                                <Setter Property="Padding" Value="0" />
+                                <Setter Property="Margin" Value="0,0,0,0" />
+                                <Setter Property="HorizontalContentAlignment" Value="Left" />
+                                <Setter Property="VerticalContentAlignment" Value="Top" />
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="TabNavigation" Value="Local" />
+                                <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Visible"/>
+                            </Style>
+                        </GroupStyle.ContainerStyle>
+                        <GroupStyle.Panel>
+                            <ItemsPanelTemplate>
+                                <VariableSizedWrapGrid Drop="VariableSizedWrapGrid_Drop" Orientation="Horizontal" AllowDrop="True" Margin="0,0,10,0" MaximumRowsOrColumns="1"  />
+                            </ItemsPanelTemplate>
+                        </GroupStyle.Panel>
+                    </GroupStyle>
+                </GridView.GroupStyle>
+            </GridView>
+        </ScrollViewer>
 
         <!-- <GridView 
                     x:Name="TasksGridView"

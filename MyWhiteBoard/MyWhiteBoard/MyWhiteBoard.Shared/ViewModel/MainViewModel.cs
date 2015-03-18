@@ -27,128 +27,86 @@ namespace MyWhiteBoard.ViewModel
             _instance = this;
             Groups = new ObservableCollection<Group>();
 
-            Group novel = new Group();
-            novel.Title = "Lundi";
+            Group monday = new Group();
+            monday.Title = "Lundi";
 
-            Group fairyTale = new Group();
-            fairyTale.Title = "Mardi";
+            Group tuesday = new Group();
+            tuesday.Title = "Mardi";
 
-            Group management = new Group();
-            management.Title = "Mercredi";
+            Group wednesday = new Group();
+            wednesday.Title = "Mercredi";
 
-            Group computerScience = new Group();
-            computerScience.Title = "Jeudi";
+            Group thursday = new Group();
+            thursday.Title = "Jeudi";
 
-            Group vendredi = new Group();
-            vendredi.Title = "Vendredi";
+            Group friday = new Group();
+            friday.Title = "Vendredi";
 
             Task badBoy = new Task();
-            badBoy.Detail = "Bad Boy";
+            badBoy.Detail = "Industrie 4.0";
             badBoy.PersonAffected = "Emmanuel Bricard";
-            badBoy.Group = novel;
-            novel.Items.Add(badBoy);
+            badBoy.Group = monday;
+            monday.Items.Add(badBoy);
 
             badBoy = new Task();
-            badBoy.Detail = "Bad Boy";
+            badBoy.Detail = "Thermibox 2";
             badBoy.PersonAffected = "Emmanuel Bricard";
-            badBoy.Group = novel;
-            novel.Items.Add(badBoy);
+            badBoy.Group = monday;
+            monday.Items.Add(badBoy);
 
             badBoy = new Task();
-            badBoy.Detail = "Bad Boy";
+            badBoy.Detail = "statistiques CRM";
             badBoy.PersonAffected = "Yannick Grall";
-            badBoy.Group = fairyTale;
-            fairyTale.Items.Add(badBoy);
+            badBoy.Group = tuesday;
+            tuesday.Items.Add(badBoy);
 
             badBoy = new Task();
-            badBoy.Detail = "Bad Boy";
+            badBoy.Detail = "PC commercial";
             badBoy.PersonAffected = "Yannick Grall";
-            badBoy.Group = fairyTale;
-            fairyTale.Items.Add(badBoy);
+            badBoy.Group = tuesday;
+            tuesday.Items.Add(badBoy);
 
             badBoy = new Task();
-            badBoy.Detail = "Bad Boy";
+            badBoy.Detail = "CRM 2015";
             badBoy.PersonAffected = "Yannick Grall";
-            badBoy.Group = management;
-            management.Items.Add(badBoy);
+            badBoy.Group = wednesday;
+            wednesday.Items.Add(badBoy);
+
+            badBoy = new Task();
+            badBoy.Detail = "Label ERP";
+            badBoy.PersonAffected = "Diégo Da Costa Oliveira";
+            badBoy.Group = wednesday;
+            wednesday.Items.Add(badBoy);
+
+            badBoy = new Task();
+            badBoy.Detail = "Pavé étiquette";
+            badBoy.PersonAffected = "Diégo Da Costa Oliveira";
+            badBoy.Group = thursday;
+            thursday.Items.Add(badBoy);
 
             badBoy = new Task();
             badBoy.Detail = "Bad Boy";
             badBoy.PersonAffected = "Diégo Da Costa Oliveira";
-            badBoy.Group = management;
-            management.Items.Add(badBoy);
+            badBoy.Group = thursday;
+            thursday.Items.Add(badBoy);
 
             badBoy = new Task();
-            badBoy.Detail = "Bad Boy";
+            badBoy.Detail = "E-dépanneur";
             badBoy.PersonAffected = "Diégo Da Costa Oliveira";
-            badBoy.Group = computerScience;
-            computerScience.Items.Add(badBoy);
+            badBoy.Group = friday;
+            friday.Items.Add(badBoy);
 
             badBoy = new Task();
-            badBoy.Detail = "Bad Boy";
+            badBoy.Detail = "GASS";
             badBoy.PersonAffected = "Diégo Da Costa Oliveira";
-            badBoy.Group = computerScience;
-            computerScience.Items.Add(badBoy);
+            badBoy.Group = friday;
+            friday.Items.Add(badBoy);
 
-            badBoy = new Task();
-            badBoy.Detail = "Bad Boy";
-            badBoy.PersonAffected = "Diégo Da Costa Oliveira";
-            badBoy.Group = vendredi;
-            vendredi.Items.Add(badBoy);
-
-            badBoy = new Task();
-            badBoy.Detail = "Bad Boy";
-            badBoy.PersonAffected = "Diégo Da Costa Oliveira";
-            badBoy.Group = vendredi;
-            vendredi.Items.Add(badBoy);
-
-            Groups.Add(novel);
-            Groups.Add(fairyTale);
-            Groups.Add(management);
-            Groups.Add(computerScience);
-            Groups.Add(vendredi);
-
-            /*for (int i = 0; i < 5; i++)
-            {
-                Group group = new Group();
-                ObservableCollection<Task> folders = new ObservableCollection<Task>();
-                for (int j = 0; j < 10; j++)
-                {
-                    if (j == 0)
-                        folders.Add(new Task { Detail = "Bug E-dépanneur.", PersonAffected = "Diégo Da Costa Oliveira" });
-
-                    else if (j == 1)
-                        folders.Add(new Task { Detail = "Bug E-dépanneur.", PersonAffected = "Emmanuel Bricard" });
-                    else
-                        folders.Add(new Task { Detail = "Bug E-dépanneur.", PersonAffected = "Yannick Grall" });
-                }
-
-                String day = "";
-
-                switch (i)
-                {
-                    case 0:
-                        day = "Lundi";
-                        break;
-                    case 1:
-                        day = "Mardi";
-                        break;
-                    case 2:
-                        day = "Mercredi";
-                        break;
-                    case 3:
-                        day = "Jeudi";
-                        break;
-                    case 4:
-                        day = "Vendredi";
-                        break;
-                }
-
-                group.Title = string.Concat(day);
-                group.Items = folders;
-                Groups.Add(group);*/
-
-
+            Groups.Add(monday);
+            Groups.Add(tuesday);
+            Groups.Add(wednesday);
+            Groups.Add(thursday);
+            Groups.Add(friday);
         }
     }
 }
