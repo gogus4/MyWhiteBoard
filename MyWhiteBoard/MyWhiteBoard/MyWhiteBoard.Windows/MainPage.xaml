@@ -4,6 +4,7 @@
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MyWhiteBoard"
+    xmlns:xc="using:Color_Picker"
     xmlns:task="using:MyWhiteBoard.View"
     xmlns:common="using:MyWhiteBoard.Common"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -45,7 +46,6 @@
                     </DoubleAnimationUsingKeyFrames>
                 </Storyboard>
             </StackPanel.Resources>
-
 
             <TextBlock 
             Margin="20"
@@ -118,10 +118,10 @@
                     </StackPanel>
                 </Button>
 
-                <Button x:Name="Init" BorderThickness="0" Tag="Initialisation">
+                <Button x:Name="Config" BorderThickness="0" Tag="Configuration" Click="Config_Click">
                     <StackPanel Orientation="Vertical" >
-                        <TextBlock HorizontalAlignment="Center" FontFamily="Segoe UI Symbol" FontSize="22" Text="&#xe117;"/>
-                        <TextBlock Text="Initialisation" Margin="0,5,0,0" FontFamily="Segoe UI Light"  HorizontalAlignment="Center"  FontSize="16"/>
+                        <TextBlock HorizontalAlignment="Center" FontFamily="Segoe UI Symbol" FontSize="22" Text="&#xe115;"/>
+                        <TextBlock Text="Configuration" Margin="0,5,0,0" FontFamily="Segoe UI Light" HorizontalAlignment="Center" FontSize="16"/>
                     </StackPanel>
                 </Button>
 
@@ -133,7 +133,7 @@
                 </Button>
             </StackPanel>
         </Grid>
-        
+
         <ScrollViewer ScrollViewer.HorizontalScrollMode="Disabled"
             ScrollViewer.VerticalScrollMode="Enabled" 
             Grid.ColumnSpan="3" 
@@ -144,14 +144,14 @@
             <GridView     
                 ScrollViewer.HorizontalScrollMode="Disabled"
                 ScrollViewer.VerticalScrollMode="Auto"
-            x:Name="TasksGridView"
+                x:Name="TasksGridView"
                 HorizontalAlignment="Center"
-            ItemTemplate="{StaticResource TaskTemplate}"
-            ItemsPanel="{StaticResource taskItemPanelTemplate}"   
-            ItemsSource="{Binding Source={StaticResource listTasksViewSource}, Mode=TwoWay}"
-            DragItemsStarting="TasksGridView_DragItemsStarting"                 
-            SelectionMode="None"
-            CanDragItems="True">
+                ItemTemplate="{StaticResource TaskTemplate}"
+                ItemsPanel="{StaticResource taskItemPanelTemplate}"   
+                ItemsSource="{Binding Source={StaticResource listTasksViewSource}, Mode=TwoWay}"
+                DragItemsStarting="TasksGridView_DragItemsStarting"                 
+                SelectionMode="None"
+                CanDragItems="True">
                 <GridView.GroupStyle>
                     <GroupStyle HidesIfEmpty="True">
                         <GroupStyle.HeaderTemplate>
@@ -183,31 +183,67 @@
             </GridView>
         </ScrollViewer>
 
-        <!-- <GridView 
-                    x:Name="TasksGridView"
-                    HorizontalAlignment="Center"
-                  Grid.ColumnSpan="3"
-                  Margin="5"
-                  Grid.Row="1"
-                  ItemTemplate="{StaticResource TaskTemplate}"
-                  ShowsScrollingPlaceholders="False"
-                  SelectionMode="None"
-                  ItemsSource="{Binding Source={StaticResource ItemsSource}}"
-                  DragItemsStarting="GridView_DragItemsStarting"
-                  VirtualizingStackPanel.VirtualizationMode="Recycling"
-                  AllowDrop="True" 
-                  CanReorderItems="True"
-                  CanDragItems="True" Drop="GridView_Drop" ContainerContentChanging="GridView_ContainerContentChanging">
-            <GridView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <VariableSizedWrapGrid Orientation="Horizontal" />
-                </ItemsPanelTemplate>
-            </GridView.ItemsPanel>
-            <GridView.GroupStyle>
-                <GroupStyle HeaderTemplate="{StaticResource HeaderDataTemplate}">
-                    
-                </GroupStyle>
-            </GridView.GroupStyle>
-        </GridView> -->
+        <!-- Popups -->
+        <Popup x:Name="PopupConfiguration" HorizontalAlignment="Right" Canvas.ZIndex="3">
+            <Popup.ChildTransitions>
+                <TransitionCollection>
+                    <PaneThemeTransition />
+                </TransitionCollection>
+            </Popup.ChildTransitions>
+            <Grid x:Name="GridPopupConfiguration" >
+                <Border  BorderBrush="#FF282828" BorderThickness="1" Background="#FF282828">
+                    <Border BorderBrush="#FF282828" BorderThickness="1">
+                        <Border BorderBrush="#FF282828" BorderThickness="1">
+                            <Border BorderBrush="#FF282828" BorderThickness="1">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <StackPanel Grid.Row="0" Orientation="Vertical" Margin="12">
+                                        <TextBlock Text="Configuration" FontSize="32" FontFamily="Segoe UI Light" FontWeight="Bold"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Vertical" Grid.Row="1">
+                                        <TextBlock Text="Ajouter un utilisateur :" FontWeight="Bold" FontSize="20" FontFamily="Segoe UI Light" Margin="12"/>
+
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="0.2*"/>
+                                                <ColumnDefinition Width="0.8*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="0.15*"/>
+                                                <RowDefinition Height="0.15*"/>
+                                                <RowDefinition Height="0.15*"/>
+                                                <RowDefinition Height="0.4*"/>
+                                                <RowDefinition Height="0.15*"/>
+                                            </Grid.RowDefinitions>
+
+                                            <TextBlock Text="Nom :" Grid.Row="0" Grid.Column="0" FontSize="16" FontFamily="Segoe UI Light" Margin="12"/>
+                                            <TextBox x:Name="Name" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1" FontSize="14" FontFamily="Segoe UI Light" Width="230" Height="20" Margin="0,0,0,4"/>
+
+                                            <TextBlock Text="Prénom :" Grid.Row="1" Grid.Column="0" FontSize="16" FontFamily="Segoe UI Light" Margin="12"/>
+                                            <TextBox x:Name="FirstName" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" FontSize="14" FontFamily="Segoe UI Light" Width="230" Height="20" Margin="0,0,0,4"/>
+
+                                            <TextBlock Text="Couleur :" Grid.Row="2" Grid.Column="0" FontSize="16" FontFamily="Segoe UI Light" Margin="12"/>
+                                            <Border x:Name="ColorSelected" Width="50" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" />
+
+                                            <xc:Clr_Pckr x:Name="PickerColor"  Width="200" Height="200" Grid.Row="3" Grid.Column="1" Margin="20" HorizontalAlignment="Left" colorChanged="PickerColor_colorChanged" />
+
+                                            <Button Content="Ajouter" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" Margin="0,20,0,0"/>
+                                        </Grid>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </Border>
+                    </Border>
+                </Border>
+            </Grid>
+        </Popup>
+
     </Grid>
 </common:LayoutAwarePage>

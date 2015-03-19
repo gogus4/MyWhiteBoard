@@ -30,6 +30,7 @@ namespace MyWhiteBoard
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
             listTasksViewSource.Source = MainViewModel.Instance.Groups;
+            ColorSelected.Background = new SolidColorBrush(PickerColor.SelectedColor);
         }
 
         private void Add_Click(object sender, RoutedEventArgs e)
@@ -47,6 +48,7 @@ namespace MyWhiteBoard
             ShowStoryboard.Stop();
             Animation.Visibility = Visibility.Collapsed;
             HiddenPage.Visibility = Visibility.Collapsed;
+            PopupConfiguration.IsOpen = false;
         }
 
         private void DisplayMenu_Click(object sender, RoutedEventArgs e)
@@ -76,9 +78,24 @@ namespace MyWhiteBoard
                     draggedItem = null;
                 }
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
             }
+        }
+
+        private void Config_Click(object sender, RoutedEventArgs e)
+        {
+            HiddenPage.Visibility = Visibility.Visible;
+
+            this.PopupConfiguration.VerticalOffset = 0;
+            GridPopupConfiguration.Width = 500;
+            GridPopupConfiguration.Height = Window.Current.Bounds.Height;
+            PopupConfiguration.HorizontalOffset = Window.Current.Bounds.Width - 500;
+            this.PopupConfiguration.IsOpen = true;
+        }
+
+        private void PickerColor_colorChanged(object sender, EventArgs e)
+        {
+            ColorSelected.Background = new SolidColorBrush(PickerColor.SelectedColor);
         }
     }
 }
