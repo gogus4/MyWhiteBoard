@@ -3,18 +3,12 @@ using MyWhiteBoard.Model;
 using MyWhiteBoard.ViewModel;
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 namespace MyWhiteBoard
 {
@@ -32,6 +26,9 @@ namespace MyWhiteBoard
         {
             listTasksViewSource.Source = MainViewModel.Instance.Groups;
             ColorSelected.Background = new SolidColorBrush(PickerColor.SelectedColor);
+
+            listFilterUserViewSource.Source = MainViewModel.Instance.Users;
+            listFilterStateViewSource.Source = MainViewModel.Instance.States;
         }
 
         private void Add_Click(object sender, RoutedEventArgs e)
@@ -51,6 +48,7 @@ namespace MyWhiteBoard
             HiddenPage.Visibility = Visibility.Collapsed;
             PopupConfiguration.IsOpen = false;
             PopupUpdateTask.IsOpen = false;
+            PopupAddTask.IsOpen = false;
         }
 
         private void DisplayMenu_Click(object sender, RoutedEventArgs e)
@@ -118,7 +116,28 @@ namespace MyWhiteBoard
             HiddenPage.Visibility = Visibility.Collapsed;
         }
 
-        private void TasksGridView_Tapped(object sender, TappedRoutedEventArgs e)
+        private void ActionUpdateTask_Click(object sender, RoutedEventArgs e)
+        {
+            var group = MainViewModel.Instance.Groups.Where(x => x.Title == clickedItem.Group.Title).FirstOrDefault();
+            var task = group.Items.Where(x => x.Detail == clickedItem.Detail && x.Group == group && x.PersonAffected == clickedItem.PersonAffected).FirstOrDefault();
+
+            group.Items.Remove(task);
+
+            var newTask = new Task();
+            newTask.Detail = LibelleUpdateTask.Text;
+            newTask.PersonAffected = PersonUpdateTask.SelectedValue.ToString();
+            newTask.Day = DayUpdateTask.SelectedValue.ToString();
+
+            var groupUpdated = MainViewModel.Instance.Groups.Where(x => x.Title == DayUpdateTask.SelectedValue.ToString()).FirstOrDefault();
+            newTask.Group = groupUpdated;
+
+            groupUpdated.Items.Add(newTask);
+
+            PopupUpdateTask.IsOpen = false;
+            HiddenPage.Visibility = Visibility.Collapsed;
+        }
+
+        private void VariableSizedWrapGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
             clickedItem = TasksGridView.SelectedItem as Task;
 
@@ -130,23 +149,9 @@ namespace MyWhiteBoard
             HiddenPage.Visibility = Visibility.Visible;
         }
 
-        private void ActionUpdateTask_Click(object sender, RoutedEventArgs e)
+        private void ActionAddUser_Click(object sender, RoutedEventArgs e)
         {
-            // A MODIFIER
-
-            var group = MainViewModel.Instance.Groups.Where(x => x.Title == clickedItem.Group.Title).FirstOrDefault();
-            var task = group.Items.Where(x => x.Detail == clickedItem.Detail && x.Group == group && x.PersonAffected == clickedItem.PersonAffected).FirstOrDefault();
-
-            task.Detail = LibelleUpdateTask.Text;
-            task.PersonAffected = PersonUpdateTask.SelectedValue.ToString();
-            task.Day = DayUpdateTask.SelectedValue.ToString();
-
-            var groupUpdated = MainViewModel.Instance.Groups.Where(x => x.Title == DayUpdateTask.SelectedValue.ToString()).FirstOrDefault();
-
-            task.Group = groupUpdated;
-
-            PopupUpdateTask.IsOpen = false;
-            HiddenPage.Visibility = Visibility.Collapsed;
+            MainViewModel.Instance.Users.Add(new User() { FirstName = FirstName.Text, Name = Name.Text, Color = PickerColor.SelectedColor.ToString() });
         }
     }
 }

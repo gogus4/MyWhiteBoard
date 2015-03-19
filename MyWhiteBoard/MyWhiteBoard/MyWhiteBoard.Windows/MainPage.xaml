@@ -14,6 +14,8 @@
     <Page.Resources>
 
         <CollectionViewSource x:Name="listTasksViewSource" IsSourceGrouped="True" ItemsPath="Items"/>
+        <CollectionViewSource x:Name="listFilterUserViewSource" />
+        <CollectionViewSource x:Name="listFilterStateViewSource" />
 
     </Page.Resources>
 
@@ -24,9 +26,9 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.1*"/>
-            <ColumnDefinition Width="0.1*"/>
-            <ColumnDefinition Width="0.8*"/>
+            <ColumnDefinition Width="0.12*"/>
+            <ColumnDefinition Width="0.12*"/>
+            <ColumnDefinition Width="0.76*"/>
         </Grid.ColumnDefinitions>
 
         <Grid x:Name="HiddenPage" Background="LightGray" Opacity="0.1" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="3"  Canvas.ZIndex="1" Visibility="Collapsed" Tapped="HiddenPage_Tapped" />
@@ -48,33 +50,39 @@
             </StackPanel.Resources>
 
             <TextBlock 
-            Margin="20"
-            Text="Playlists"
-            Style="{StaticResource SubheaderTextBlockStyle}" />
+                Margin="20"
+                FontSize="32"
+                Text="Filtrer"
+                FontWeight="Bold"
+                FontFamily="Segoe UI Light"/>
+
+            <TextBlock 
+                Margin="20"
+                FontSize="18"
+                FontWeight="Bold"
+                Text="Par personnes :"
+                FontFamily="Segoe UI Light"/>
+
             <ListView
-            Margin="20,0,0,0"
-            SelectionMode="Single"
-            SelectedItem="{Binding SelectedPlaylist, Mode=TwoWay}"
-            ItemsSource="{Binding Playlists}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <Border Height="25" Width="25" Background="White" />
-                            <TextBlock 
-                            Margin="10,0,0,0" LineHeight="0" FontWeight="Light"
-                            Text="{Binding Title, FallbackValue='Sample Playlist Title'}"
-                            VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-                <x:String>Test</x:String>
-                <x:String>Test</x:String>
-                <x:String>Test</x:String>
-                <x:String>Test</x:String>
-                <x:String>Test</x:String>
-                <x:String>Test</x:String>
-                <x:String>Test</x:String>
-            </ListView>
+                x:Name="FilterUserList"
+                Margin="20,0,0,0"
+                SelectionMode="Single"
+                ItemTemplate="{StaticResource FilterUserTemplate}"
+                ItemsSource="{Binding Source={StaticResource listFilterUserViewSource}}"/>
+
+            <TextBlock 
+                Margin="20"
+                FontSize="18"
+                FontWeight="Bold"
+                Text="Par états :"
+                FontFamily="Segoe UI Light"/>
+
+            <ListView
+                x:Name="FilterStateList"
+                Margin="20,0,0,0"
+                SelectionMode="Single"
+                ItemTemplate="{StaticResource FilterStateTemplate}"
+                ItemsSource="{Binding Source={StaticResource listFilterStateViewSource}}"/>
         </StackPanel>
 
         <Grid Grid.Row="0" Grid.ColumnSpan="3" Background="#FF5A544D">
@@ -151,7 +159,7 @@
                 ItemsSource="{Binding Source={StaticResource listTasksViewSource}, Mode=TwoWay}"
                 DragItemsStarting="TasksGridView_DragItemsStarting"                 
                 SelectionMode="Single"
-                CanDragItems="True" Tapped="TasksGridView_Tapped" >
+                CanDragItems="True" >
                 <GridView.GroupStyle>
                     <GroupStyle HidesIfEmpty="True">
                         <GroupStyle.HeaderTemplate>
@@ -175,7 +183,7 @@
                         </GroupStyle.ContainerStyle>
                         <GroupStyle.Panel>
                             <ItemsPanelTemplate>
-                                <VariableSizedWrapGrid Drop="VariableSizedWrapGrid_Drop" Orientation="Horizontal" AllowDrop="True" Margin="0,0,10,0" MaximumRowsOrColumns="1"  />
+                                <VariableSizedWrapGrid Drop="VariableSizedWrapGrid_Drop" Orientation="Horizontal" AllowDrop="True" Margin="0,0,10,0" MaximumRowsOrColumns="1" Tapped="VariableSizedWrapGrid_Tapped"  />
                             </ItemsPanelTemplate>
                         </GroupStyle.Panel>
                     </GroupStyle>
@@ -234,7 +242,7 @@
 
                                             <xc:Clr_Pckr x:Name="PickerColor"  Width="200" Height="200" Grid.Row="3" Grid.Column="1" Margin="20" HorizontalAlignment="Left" colorChanged="PickerColor_colorChanged" />
 
-                                            <Button Content="Ajouter" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" Margin="0,20,0,0"/>
+                                            <Button Content="Ajouter" x:Name="ActionAddUser" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" Margin="0,20,0,0" Click="ActionAddUser_Click"/>
                                         </Grid>
                                     </StackPanel>
                                 </Grid>

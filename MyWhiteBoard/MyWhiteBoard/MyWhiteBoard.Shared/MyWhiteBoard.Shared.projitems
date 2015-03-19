@@ -22,6 +22,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\RichTextColumns.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\SuspensionManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Group.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\State.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\User.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Task.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\MainViewModel.cs" />
   </ItemGroup>

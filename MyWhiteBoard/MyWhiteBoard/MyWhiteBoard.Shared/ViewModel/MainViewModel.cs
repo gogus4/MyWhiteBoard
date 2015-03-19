@@ -21,11 +21,24 @@ namespace MyWhiteBoard.ViewModel
         }
 
         public ObservableCollection<Group> Groups { get; set; }
+        public ObservableCollection<User> Users { get; set; }
+        public ObservableCollection<State> States { get; set; }
 
         public MainViewModel()
         {
             _instance = this;
             Groups = new ObservableCollection<Group>();
+            Users = new ObservableCollection<User>();
+            States = new ObservableCollection<State>();
+
+            Users.Add(new User() { Name = "Da Costa Oliveira", FirstName = "Diégo", Color = "Red" });
+            Users.Add(new User() { Name = "Bricard", FirstName = "Emmanuel", Color = "Blue" });
+            Users.Add(new User() { Name = "Grall", FirstName = "Yannick", Color = "Brown" });
+            Users.Add(new User() { Name = "Flamant", FirstName = "Romain", Color = "Yellow" });
+
+            States.Add(new State() { Libelle = "En cours", Color = "Gray" });
+            States.Add(new State() { Libelle = "Terminer", Color = "Green" });
+            States.Add(new State() { Libelle = "Tous",  Color = "White" });
 
             Group monday = new Group();
             monday.Title = "Lundi";

@@ -12,6 +12,35 @@
 
             <x:String x:Key="AppName">My WhiteBoard</x:String>
 
+            <DataTemplate x:Key="FilterUserTemplate">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.2*"/>
+                        <ColumnDefinition Width="0.8*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Background="{Binding Color}" Width="30" Height="30"/>
+                    
+                    <TextBlock Grid.Column="1" VerticalAlignment="Center" FontSize="18" Margin="10,0,0,0">
+                        <Run Text="{Binding FirstName}"/>
+                        <Run Text="{Binding Name}"/>
+                    </TextBlock>
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate x:Key="FilterStateTemplate">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.2*"/>
+                        <ColumnDefinition Width="0.8*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Background="{Binding Color}" Width="30" Height="30"/>
+
+                    <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="{Binding Libelle}" FontSize="18" Margin="10,0,0,0"/>
+                </Grid>
+            </DataTemplate>
+
             <DataTemplate x:Key="TaskTemplate">
                 <Border 
                     Background="#FF5A544D"
