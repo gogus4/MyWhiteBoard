@@ -21,6 +21,7 @@ namespace MyWhiteBoard
     public sealed partial class MainPage : LayoutAwarePage
     {
         private Task draggedItem;
+        private Task clickedItem;
 
         public MainPage()
         {
@@ -49,6 +50,7 @@ namespace MyWhiteBoard
             Animation.Visibility = Visibility.Collapsed;
             HiddenPage.Visibility = Visibility.Collapsed;
             PopupConfiguration.IsOpen = false;
+            PopupUpdateTask.IsOpen = false;
         }
 
         private void DisplayMenu_Click(object sender, RoutedEventArgs e)
@@ -78,7 +80,8 @@ namespace MyWhiteBoard
                     draggedItem = null;
                 }
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
             }
         }
 
@@ -96,6 +99,54 @@ namespace MyWhiteBoard
         private void PickerColor_colorChanged(object sender, EventArgs e)
         {
             ColorSelected.Background = new SolidColorBrush(PickerColor.SelectedColor);
+        }
+
+        private void AddTask_Click(object sender, RoutedEventArgs e)
+        {
+            PopupAddTask.IsOpen = true;
+            HiddenPage.Visibility = Visibility.Visible;
+        }
+
+        private void ActionAddTask_Click(object sender, RoutedEventArgs e)
+        {
+            Group group = MainViewModel.Instance.Groups.Where(x => x.Title == DayTask.SelectedValue.ToString()).FirstOrDefault();
+            Task task = new Task() { Detail = LibelleTask.Text, Group = group, PersonAffected = PersonTask.SelectedValue.ToString() };
+
+            group.Items.Add(task);
+
+            PopupAddTask.IsOpen = false;
+            HiddenPage.Visibility = Visibility.Collapsed;
+        }
+
+        private void TasksGridView_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            clickedItem = TasksGridView.SelectedItem as Task;
+
+            LibelleUpdateTask.Text = clickedItem.Detail;
+            PersonUpdateTask.SelectedValue = clickedItem.PersonAffected;
+            DayUpdateTask.SelectedValue = clickedItem.Group.Title;
+
+            PopupUpdateTask.IsOpen = true;
+            HiddenPage.Visibility = Visibility.Visible;
+        }
+
+        private void ActionUpdateTask_Click(object sender, RoutedEventArgs e)
+        {
+            // A MODIFIER
+
+            var group = MainViewModel.Instance.Groups.Where(x => x.Title == clickedItem.Group.Title).FirstOrDefault();
+            var task = group.Items.Where(x => x.Detail == clickedItem.Detail && x.Group == group && x.PersonAffected == clickedItem.PersonAffected).FirstOrDefault();
+
+            task.Detail = LibelleUpdateTask.Text;
+            task.PersonAffected = PersonUpdateTask.SelectedValue.ToString();
+            task.Day = DayUpdateTask.SelectedValue.ToString();
+
+            var groupUpdated = MainViewModel.Instance.Groups.Where(x => x.Title == DayUpdateTask.SelectedValue.ToString()).FirstOrDefault();
+
+            task.Group = groupUpdated;
+
+            PopupUpdateTask.IsOpen = false;
+            HiddenPage.Visibility = Visibility.Collapsed;
         }
     }
 }

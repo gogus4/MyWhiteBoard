@@ -125,7 +125,7 @@
                     </StackPanel>
                 </Button>
 
-                <Button x:Name="AddTask" BorderThickness="0" Tag="Ajouter une tâche">
+                <Button x:Name="AddTask" BorderThickness="0" Tag="Ajouter une tâche" Click="AddTask_Click">
                     <StackPanel Orientation="Vertical" >
                         <TextBlock HorizontalAlignment="Center" FontFamily="Segoe UI Symbol" FontSize="22" Text="&#xe109;"/>
                         <TextBlock Text="Ajouter une tâche" Margin="0,5,0,0" FontFamily="Segoe UI Light"  HorizontalAlignment="Center"  FontSize="16"/>
@@ -150,8 +150,8 @@
                 ItemsPanel="{StaticResource taskItemPanelTemplate}"   
                 ItemsSource="{Binding Source={StaticResource listTasksViewSource}, Mode=TwoWay}"
                 DragItemsStarting="TasksGridView_DragItemsStarting"                 
-                SelectionMode="None"
-                CanDragItems="True">
+                SelectionMode="Single"
+                CanDragItems="True" Tapped="TasksGridView_Tapped" >
                 <GridView.GroupStyle>
                     <GroupStyle HidesIfEmpty="True">
                         <GroupStyle.HeaderTemplate>
@@ -237,6 +237,136 @@
                                             <Button Content="Ajouter" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" Margin="0,20,0,0"/>
                                         </Grid>
                                     </StackPanel>
+                                </Grid>
+                            </Border>
+                        </Border>
+                    </Border>
+                </Border>
+            </Grid>
+        </Popup>
+
+        <Popup x:Name="PopupAddTask" Width="500" Grid.Row="1" Grid.ColumnSpan="3" VerticalAlignment="Top" Margin="0,150,0,0" HorizontalAlignment="Center" Canvas.ZIndex="3">
+            <Popup.ChildTransitions>
+                <TransitionCollection>
+                    <PaneThemeTransition />
+                </TransitionCollection>
+            </Popup.ChildTransitions>
+            <Grid x:Name="GridPopupAddTask" Width="600" Background="#FF5A544D">
+                <Border  BorderBrush="#FF282828" BorderThickness="1">
+                    <Border BorderBrush="#FF282828" BorderThickness="1">
+                        <Border BorderBrush="#FF282828" BorderThickness="1">
+                            <Border BorderBrush="#FF282828" BorderThickness="1">
+                                <Grid Margin="20" VerticalAlignment="Center">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <StackPanel Grid.Row="0" Orientation="Vertical" Margin="12">
+                                        <TextBlock Text="Ajouter une tâche" FontSize="32" FontFamily="Segoe UI Light" FontWeight="Bold"/>
+                                    </StackPanel>
+
+                                    <Grid Grid.Row="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="0.2*"/>
+                                            <ColumnDefinition Width="0.8*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="0.25*"/>
+                                            <RowDefinition Height="0.25*"/>
+                                            <RowDefinition Height="0.25*"/>
+                                            <RowDefinition Height="0.25*"/>
+                                        </Grid.RowDefinitions>
+
+                                        <TextBlock Text="Libelle :" Grid.Row="0" Grid.Column="0" FontSize="16" FontFamily="Segoe UI Light" Margin="12"/>
+                                        <TextBox x:Name="LibelleTask" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1" FontSize="14" FontFamily="Segoe UI Light" Width="250" Height="20" Margin="0,0,0,4"/>
+
+                                        <TextBlock Text="Personne :" Grid.Row="1" Grid.Column="0" FontSize="16" FontFamily="Segoe UI Light" Margin="12"/>
+                                        <ComboBox x:Name="PersonTask" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" FontSize="14" FontFamily="Segoe UI Light" Width="250" Height="36" Margin="0,0,0,4">
+                                            <x:String>Diégo Da Costa Oliveira</x:String>
+                                            <x:String>Emmanuel Bricard</x:String>
+                                            <x:String>Yannick Grall</x:String>
+                                            <x:String>Romain Flamant</x:String>
+                                        </ComboBox>
+
+                                        <TextBlock Text="Jour :" Grid.Row="2" Grid.Column="0" FontSize="16" FontFamily="Segoe UI Light" Margin="12"/>
+                                        <ComboBox x:Name="DayTask" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" FontSize="14" FontFamily="Segoe UI Light" Width="250" Height="36" Margin="0,0,0,4">
+                                            <x:String>Lundi</x:String>
+                                            <x:String>Mardi</x:String>
+                                            <x:String>Mercredi</x:String>
+                                            <x:String>Jeudi</x:String>
+                                            <x:String>Vendredi</x:String>
+                                        </ComboBox>
+
+                                        <Button x:Name="ActionAddTask" Content="Ajouter" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Margin="0,0,20,0" Click="ActionAddTask_Click"/>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </Border>
+                    </Border>
+                </Border>
+            </Grid>
+        </Popup>
+
+        <Popup x:Name="PopupUpdateTask" Width="500" Grid.Row="1" Grid.ColumnSpan="3" VerticalAlignment="Top" Margin="0,150,0,0" HorizontalAlignment="Center" Canvas.ZIndex="3">
+            <Popup.ChildTransitions>
+                <TransitionCollection>
+                    <PaneThemeTransition />
+                </TransitionCollection>
+            </Popup.ChildTransitions>
+            <Grid x:Name="GridPopupUpdateTask" Width="600" Background="#FF5A544D">
+                <Border  BorderBrush="#FF282828" BorderThickness="1">
+                    <Border BorderBrush="#FF282828" BorderThickness="1">
+                        <Border BorderBrush="#FF282828" BorderThickness="1">
+                            <Border BorderBrush="#FF282828" BorderThickness="1">
+                                <Grid Margin="20" VerticalAlignment="Center">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <StackPanel Grid.Row="0" Orientation="Vertical" Margin="12">
+                                        <TextBlock Text="Modifier une tâche" FontSize="32" FontFamily="Segoe UI Light" FontWeight="Bold"/>
+                                    </StackPanel>
+
+                                    <Grid Grid.Row="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="0.2*"/>
+                                            <ColumnDefinition Width="0.8*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="0.25*"/>
+                                            <RowDefinition Height="0.25*"/>
+                                            <RowDefinition Height="0.25*"/>
+                                            <RowDefinition Height="0.25*"/>
+                                        </Grid.RowDefinitions>
+
+                                        <TextBlock Text="Libelle :" Grid.Row="0" Grid.Column="0" FontSize="16" FontFamily="Segoe UI Light" Margin="12"/>
+                                        <TextBox x:Name="LibelleUpdateTask" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1" FontSize="14" FontFamily="Segoe UI Light" Width="250" Height="20" Margin="0,0,0,4"/>
+
+                                        <TextBlock Text="Personne :" Grid.Row="1" Grid.Column="0" FontSize="16" FontFamily="Segoe UI Light" Margin="12"/>
+                                        <ComboBox x:Name="PersonUpdateTask" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" FontSize="14" FontFamily="Segoe UI Light" Width="250" Height="36" Margin="0,0,0,4">
+                                            <x:String>Diégo Da Costa Oliveira</x:String>
+                                            <x:String>Emmanuel Bricard</x:String>
+                                            <x:String>Yannick Grall</x:String>
+                                            <x:String>Romain Flamant</x:String>
+                                        </ComboBox>
+
+                                        <TextBlock Text="Jour :" Grid.Row="2" Grid.Column="0" FontSize="16" FontFamily="Segoe UI Light" Margin="12"/>
+                                        <ComboBox x:Name="DayUpdateTask" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" FontSize="14" FontFamily="Segoe UI Light" Width="250" Height="36" Margin="0,0,0,4">
+                                            <x:String>Lundi</x:String>
+                                            <x:String>Mardi</x:String>
+                                            <x:String>Mercredi</x:String>
+                                            <x:String>Jeudi</x:String>
+                                            <x:String>Vendredi</x:String>
+                                        </ComboBox>
+
+                                        <Button x:Name="ActionUpdateTask" Content="Modifier" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Margin="0,0,20,0" Click="ActionUpdateTask_Click" />
+                                    </Grid>
                                 </Grid>
                             </Border>
                         </Border>
