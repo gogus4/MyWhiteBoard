@@ -38,7 +38,7 @@ namespace MyWhiteBoard.ViewModel
 
             States.Add(new State() { Libelle = "En cours", Color = "Gray" });
             States.Add(new State() { Libelle = "Terminer", Color = "Green" });
-            States.Add(new State() { Libelle = "Tous",  Color = "White" });
+            States.Add(new State() { Libelle = "Tous", Color = "White" });
 
             Group monday = new Group();
             monday.Title = "Lundi";
@@ -57,61 +57,61 @@ namespace MyWhiteBoard.ViewModel
 
             Task badBoy = new Task();
             badBoy.Detail = "Industrie 4.0";
-            badBoy.PersonAffected = "Emmanuel Bricard";
+            badBoy.PersonAffected = MainViewModel.Instance.Users[1];
             badBoy.Group = monday;
             monday.Items.Add(badBoy);
 
             badBoy = new Task();
             badBoy.Detail = "Thermibox 2";
-            badBoy.PersonAffected = "Emmanuel Bricard";
+            badBoy.PersonAffected = MainViewModel.Instance.Users[1];
             badBoy.Group = monday;
             monday.Items.Add(badBoy);
 
             badBoy = new Task();
             badBoy.Detail = "statistiques CRM";
-            badBoy.PersonAffected = "Yannick Grall";
+            badBoy.PersonAffected = MainViewModel.Instance.Users[2];
             badBoy.Group = tuesday;
             tuesday.Items.Add(badBoy);
 
             badBoy = new Task();
             badBoy.Detail = "PC commercial";
-            badBoy.PersonAffected = "Yannick Grall";
+            badBoy.PersonAffected = MainViewModel.Instance.Users[2];
             badBoy.Group = tuesday;
             tuesday.Items.Add(badBoy);
 
             badBoy = new Task();
             badBoy.Detail = "CRM 2015";
-            badBoy.PersonAffected = "Yannick Grall";
+            badBoy.PersonAffected = MainViewModel.Instance.Users[2];
             badBoy.Group = wednesday;
             wednesday.Items.Add(badBoy);
 
             badBoy = new Task();
             badBoy.Detail = "Label ERP";
-            badBoy.PersonAffected = "Diégo Da Costa Oliveira";
+            badBoy.PersonAffected = MainViewModel.Instance.Users[0];
             badBoy.Group = wednesday;
             wednesday.Items.Add(badBoy);
 
             badBoy = new Task();
             badBoy.Detail = "Pavé étiquette";
-            badBoy.PersonAffected = "Diégo Da Costa Oliveira";
+            badBoy.PersonAffected = MainViewModel.Instance.Users[0];
             badBoy.Group = thursday;
             thursday.Items.Add(badBoy);
 
             badBoy = new Task();
             badBoy.Detail = "Bad Boy";
-            badBoy.PersonAffected = "Diégo Da Costa Oliveira";
+            badBoy.PersonAffected = MainViewModel.Instance.Users[0];
             badBoy.Group = thursday;
             thursday.Items.Add(badBoy);
 
             badBoy = new Task();
             badBoy.Detail = "E-dépanneur";
-            badBoy.PersonAffected = "Diégo Da Costa Oliveira";
+            badBoy.PersonAffected = MainViewModel.Instance.Users[0];
             badBoy.Group = friday;
             friday.Items.Add(badBoy);
 
             badBoy = new Task();
             badBoy.Detail = "GASS";
-            badBoy.PersonAffected = "Diégo Da Costa Oliveira";
+            badBoy.PersonAffected = MainViewModel.Instance.Users[0];
             badBoy.Group = friday;
             friday.Items.Add(badBoy);
 

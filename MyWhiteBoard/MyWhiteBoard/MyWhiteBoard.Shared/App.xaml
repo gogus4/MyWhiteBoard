@@ -20,7 +20,7 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Grid.Column="0" Background="{Binding Color}" Width="30" Height="30"/>
-                    
+
                     <TextBlock Grid.Column="1" VerticalAlignment="Center" FontSize="18" Margin="10,0,0,0">
                         <Run Text="{Binding FirstName}"/>
                         <Run Text="{Binding Name}"/>
@@ -73,11 +73,15 @@
                         <Grid Background="{Binding Color}" Grid.Row="1" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center">
 
                             <TextBlock 
-                            x:Name="Person"
-                            Margin="5,5,5,0"
-                            Text="{Binding PersonAffected}"
-                            FontFamily="Segoe UI Light"
-                            FontSize="16" />
+                                x:Name="Person"
+                                Margin="5,5,5,0"
+                                FontFamily="Segoe UI Light"
+                                FontSize="16" >
+                                
+                                <Run Text="{Binding PersonAffected.FirstName}"/>
+                                <Run Text="{Binding PersonAffected.Name}"/>
+
+                            </TextBlock>
                         </Grid>
                     </Grid>
                 </Border>

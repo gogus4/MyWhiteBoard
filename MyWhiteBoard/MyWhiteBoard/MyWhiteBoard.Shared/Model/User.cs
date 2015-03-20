@@ -16,5 +16,10 @@ namespace MyWhiteBoard.Model
         {
             
         }
+
+        public override String ToString()
+        {
+            return FirstName + " " + Name;
+        }
     }
 }

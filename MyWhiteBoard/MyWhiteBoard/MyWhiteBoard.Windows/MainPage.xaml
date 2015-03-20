@@ -9,6 +9,7 @@
     xmlns:common="using:MyWhiteBoard.Common"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:live="using:Microsoft.Live.Controls"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -34,20 +35,11 @@
         <Grid x:Name="HiddenPage" Background="LightGray" Opacity="0.1" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="3"  Canvas.ZIndex="1" Visibility="Collapsed" Tapped="HiddenPage_Tapped" />
 
         <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Visibility="Collapsed" x:Name="Animation" Background="#FF282828" Grid.RowSpan="2" Canvas.ZIndex="1">
-            <StackPanel.Resources>
-                <Storyboard x:Name="ShowStoryboard">
-                    <DoubleAnimationUsingKeyFrames
-                            Storyboard.TargetName="Animation"
-                            Storyboard.TargetProperty="(Canvas.Left)"
-                            Duration="0:0:5"
-                            >
-                        <DiscreteDoubleKeyFrame KeyTime="0:0:0.5" Value="10" />
-                        <DiscreteDoubleKeyFrame KeyTime="0:0:2" Value="25" />
-                        <DiscreteDoubleKeyFrame KeyTime="0:0:3" Value="50" />
-                        <EasingDoubleKeyFrame KeyTime="0:0:5" Value="100" />
-                    </DoubleAnimationUsingKeyFrames>
-                </Storyboard>
-            </StackPanel.Resources>
+            <StackPanel.Transitions>
+                <TransitionCollection>
+                    <PaneThemeTransition />
+                </TransitionCollection>
+            </StackPanel.Transitions>
 
             <TextBlock 
                 Margin="20"
@@ -67,8 +59,9 @@
                 x:Name="FilterUserList"
                 Margin="20,0,0,0"
                 SelectionMode="Single"
+                
                 ItemTemplate="{StaticResource FilterUserTemplate}"
-                ItemsSource="{Binding Source={StaticResource listFilterUserViewSource}}"/>
+                ItemsSource="{Binding Source={StaticResource listFilterUserViewSource}}" Tapped="FilterUserList_Tapped"/>
 
             <TextBlock 
                 Margin="20"
@@ -256,7 +249,8 @@
         <Popup x:Name="PopupAddTask" Width="500" Grid.Row="1" Grid.ColumnSpan="3" VerticalAlignment="Top" Margin="0,150,0,0" HorizontalAlignment="Center" Canvas.ZIndex="3">
             <Popup.ChildTransitions>
                 <TransitionCollection>
-                    <PaneThemeTransition />
+                    <RepositionThemeTransition/>
+                    <EntranceThemeTransition />
                 </TransitionCollection>
             </Popup.ChildTransitions>
             <Grid x:Name="GridPopupAddTask" Width="600" Background="#FF5A544D">
@@ -292,11 +286,7 @@
                                         <TextBox x:Name="LibelleTask" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1" FontSize="14" FontFamily="Segoe UI Light" Width="250" Height="20" Margin="0,0,0,4"/>
 
                                         <TextBlock Text="Personne :" Grid.Row="1" Grid.Column="0" FontSize="16" FontFamily="Segoe UI Light" Margin="12"/>
-                                        <ComboBox x:Name="PersonTask" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" FontSize="14" FontFamily="Segoe UI Light" Width="250" Height="36" Margin="0,0,0,4">
-                                            <x:String>Diégo Da Costa Oliveira</x:String>
-                                            <x:String>Emmanuel Bricard</x:String>
-                                            <x:String>Yannick Grall</x:String>
-                                            <x:String>Romain Flamant</x:String>
+                                        <ComboBox x:Name="PersonTask" ItemsSource="{Binding Source={StaticResource listFilterUserViewSource}}" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" FontSize="14" FontFamily="Segoe UI Light" Width="250" Height="36" Margin="0,0,0,4">
                                         </ComboBox>
 
                                         <TextBlock Text="Jour :" Grid.Row="2" Grid.Column="0" FontSize="16" FontFamily="Segoe UI Light" Margin="12"/>
@@ -321,7 +311,8 @@
         <Popup x:Name="PopupUpdateTask" Width="500" Grid.Row="1" Grid.ColumnSpan="3" VerticalAlignment="Top" Margin="0,150,0,0" HorizontalAlignment="Center" Canvas.ZIndex="3">
             <Popup.ChildTransitions>
                 <TransitionCollection>
-                    <PaneThemeTransition />
+                    <RepositionThemeTransition/>
+                    <EntranceThemeTransition />
                 </TransitionCollection>
             </Popup.ChildTransitions>
             <Grid x:Name="GridPopupUpdateTask" Width="600" Background="#FF5A544D">
@@ -357,11 +348,7 @@
                                         <TextBox x:Name="LibelleUpdateTask" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1" FontSize="14" FontFamily="Segoe UI Light" Width="250" Height="20" Margin="0,0,0,4"/>
 
                                         <TextBlock Text="Personne :" Grid.Row="1" Grid.Column="0" FontSize="16" FontFamily="Segoe UI Light" Margin="12"/>
-                                        <ComboBox x:Name="PersonUpdateTask" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" FontSize="14" FontFamily="Segoe UI Light" Width="250" Height="36" Margin="0,0,0,4">
-                                            <x:String>Diégo Da Costa Oliveira</x:String>
-                                            <x:String>Emmanuel Bricard</x:String>
-                                            <x:String>Yannick Grall</x:String>
-                                            <x:String>Romain Flamant</x:String>
+                                        <ComboBox x:Name="PersonUpdateTask" ItemsSource="{Binding Source={StaticResource listFilterUserViewSource}}" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" FontSize="14" FontFamily="Segoe UI Light" Width="250" Height="36" Margin="0,0,0,4">
                                         </ComboBox>
 
                                         <TextBlock Text="Jour :" Grid.Row="2" Grid.Column="0" FontSize="16" FontFamily="Segoe UI Light" Margin="12"/>

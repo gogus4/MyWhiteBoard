@@ -2,6 +2,7 @@
 using MyWhiteBoard.Model;
 using MyWhiteBoard.ViewModel;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -9,6 +10,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Microsoft.Live;
 
 namespace MyWhiteBoard
 {
@@ -16,6 +18,15 @@ namespace MyWhiteBoard
     {
         private Task draggedItem;
         private Task clickedItem;
+
+        private static readonly string[] _scopes =
+        new[] { 
+        "wl.signin", 
+        "wl.basic", 
+        "wl.calendars", 
+        "wl.calendars_update", 
+        "wl.contacts_calendars", 
+        "wl.events_create" };
 
         public MainPage()
         {
@@ -33,7 +44,7 @@ namespace MyWhiteBoard
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {
-            MainViewModel.Instance.Groups[0].Items.Add(new Task { Detail = "Ceci est le détail de la tache à réaliser.Ceci est le détail de la tache à réaliser.", PersonAffected = "Diégo Da Costa Oliveira" });
+            MainViewModel.Instance.Groups[0].Items.Add(new Task { Detail = "Ceci est le détail de la tache à réaliser.Ceci est le détail de la tache à réaliser.", PersonAffected = MainViewModel.Instance.Users[0] });
         }
 
         private void Next_Click(object sender, RoutedEventArgs e)
@@ -43,7 +54,6 @@ namespace MyWhiteBoard
 
         private void HiddenPage_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            ShowStoryboard.Stop();
             Animation.Visibility = Visibility.Collapsed;
             HiddenPage.Visibility = Visibility.Collapsed;
             PopupConfiguration.IsOpen = false;
@@ -55,7 +65,6 @@ namespace MyWhiteBoard
         {
             Animation.Visibility = Visibility.Visible;
             HiddenPage.Visibility = Visibility.Visible;
-            ShowStoryboard.Begin();
         }
 
         private void TasksGridView_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
@@ -103,12 +112,16 @@ namespace MyWhiteBoard
         {
             PopupAddTask.IsOpen = true;
             HiddenPage.Visibility = Visibility.Visible;
+
+            calendar();
         }
 
         private void ActionAddTask_Click(object sender, RoutedEventArgs e)
         {
+            var userSelected = PersonTask.SelectedItem as User;
+
             Group group = MainViewModel.Instance.Groups.Where(x => x.Title == DayTask.SelectedValue.ToString()).FirstOrDefault();
-            Task task = new Task() { Detail = LibelleTask.Text, Group = group, PersonAffected = PersonTask.SelectedValue.ToString() };
+            Task task = new Task() { Detail = LibelleTask.Text, Group = group, PersonAffected = userSelected };
 
             group.Items.Add(task);
 
@@ -123,9 +136,11 @@ namespace MyWhiteBoard
 
             group.Items.Remove(task);
 
+            var userSelected = PersonUpdateTask.SelectedItem as User;
+
             var newTask = new Task();
             newTask.Detail = LibelleUpdateTask.Text;
-            newTask.PersonAffected = PersonUpdateTask.SelectedValue.ToString();
+            newTask.PersonAffected = MainViewModel.Instance.Users.Where(x => x.FirstName == userSelected.FirstName && x.Name == userSelected.Name).FirstOrDefault();
             newTask.Day = DayUpdateTask.SelectedValue.ToString();
 
             var groupUpdated = MainViewModel.Instance.Groups.Where(x => x.Title == DayUpdateTask.SelectedValue.ToString()).FirstOrDefault();
@@ -152,6 +167,54 @@ namespace MyWhiteBoard
         private void ActionAddUser_Click(object sender, RoutedEventArgs e)
         {
             MainViewModel.Instance.Users.Add(new User() { FirstName = FirstName.Text, Name = Name.Text, Color = PickerColor.SelectedColor.ToString() });
+        }
+
+        private void FilterUserList_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            var user = FilterUserList.SelectedItem as User;
+            var groups = new ObservableCollection<Group>();
+
+            var groupsCopy = new ObservableCollection<Group>();
+
+            foreach (Group g in MainViewModel.Instance.Groups)
+            {
+                groupsCopy.Add(new Group(g.Title, g.Items));
+            }
+
+            foreach (var group in groupsCopy)
+            {
+                var toRemove = group.Items.Where(x => x.PersonAffected != user).ToList();
+
+                foreach (var item in toRemove)
+                    group.Items.Remove(item);
+
+                groups.Add(group);
+            }
+
+            listTasksViewSource.Source = groups;
+        }
+
+        public async void calendar()
+        {
+            LiveAuthClient auth = new LiveAuthClient();
+            LiveLoginResult loginResult = await auth.InitializeAsync(new string[] { "wl.basic" });
+            if (loginResult.Status == LiveConnectSessionStatus.Connected)
+            { }
+
+            // Turn off the display of the connection button in the UI.
+            //connectButton.Visibility = connected ? Visibility.Collapsed : Visibility.Visible;
+            /*try
+            {
+                LiveConnectClient liveClient = new LiveConnectClient();
+                LiveOperationResult operationResult =
+                    await liveClient.GetAsync("calendar.8c8ce076ca27823f.9690899aeeae4e97be18cdc75b644454");
+                dynamic result = operationResult.Result;
+                this.infoTextBlock.Text = "Calendar name: " + result.name;
+            }
+            catch (LiveConnectException exception)
+            {
+                this.infoTextBlock.Text = "Error getting calendar info: " + exception.Message;
+            }*/
         }
     }
 }

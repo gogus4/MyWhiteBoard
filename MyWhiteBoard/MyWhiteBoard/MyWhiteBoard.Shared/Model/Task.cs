@@ -10,7 +10,7 @@ namespace MyWhiteBoard.Model
 
         public string Detail { get; set; }
 
-        public string PersonAffected { get; set; }
+        public User PersonAffected { get; set; }
 
         public Group Group { get; set; }
 
@@ -18,24 +18,7 @@ namespace MyWhiteBoard.Model
         {
             get
             {
-                switch (PersonAffected)
-                {
-                    case "Diégo Da Costa Oliveira":
-                        return "Red";
-
-                    case "Emmanuel Bricard":
-                        return "Blue";
-
-                    case "Yannick Grall":
-                        return "Brown";
-
-                    default:
-                        return "White";
-                }
-            }
-            set
-            {
-                Color = value;
+                return PersonAffected.Color;
             }
         }
         public Boolean Urgent { get; set; }
