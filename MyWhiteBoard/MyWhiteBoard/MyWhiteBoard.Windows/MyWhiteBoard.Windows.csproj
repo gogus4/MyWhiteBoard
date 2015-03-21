@@ -133,11 +133,6 @@
       <HintPath>..\..\packages\RadialColorPickerCV.1.2.8\lib\Color_Picker.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <SDKReference Include="LiveSDKXAML, Version=5.6">
-      <Name>Live SDK</Name>
-    </SDKReference>
-  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
   </PropertyGroup>

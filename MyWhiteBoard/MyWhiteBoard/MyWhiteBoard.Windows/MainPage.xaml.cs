@@ -10,7 +10,6 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Microsoft.Live;
 
 namespace MyWhiteBoard
 {
@@ -196,10 +195,10 @@ namespace MyWhiteBoard
 
         public async void calendar()
         {
-            LiveAuthClient auth = new LiveAuthClient();
+            /*LiveAuthClient auth = new LiveAuthClient();
             LiveLoginResult loginResult = await auth.InitializeAsync(new string[] { "wl.basic" });
             if (loginResult.Status == LiveConnectSessionStatus.Connected)
-            { }
+            { }*/
 
             // Turn off the display of the connection button in the UI.
             //connectButton.Visibility = connected ? Visibility.Collapsed : Visibility.Visible;
